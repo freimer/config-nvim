@@ -15,7 +15,7 @@ lsp.ensure_installed({
 	'tsserver',
 	'eslint',
 --	'sumneko_lua',
-	'pylsp',
+	'pyright',
 	'gopls',
 })
 
@@ -44,4 +44,20 @@ lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
 	vim.keymap.set("n", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
+
+local lspconfig = require('lspconfig')
+-- local black = lspconfig.util.formatters.black
+lspconfig.pyright.setup({
+    settings = {
+        python = {
+            formatting = {
+                provider = 'black',
+                black = {
+                    line_length = 80,
+                }
+            }
+        }
+    }
+})
+
 lsp.setup()
